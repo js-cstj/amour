@@ -2,7 +2,7 @@
 Exemple d'utilisation de setInterval et de setTimeout
 
 ## Description
-En prévision de la Saint-Valentin, on vous demande de faire on vous demande de faire une animation impliquant des coeur et du mouvement.
+En prévision de la Saint-Valentin, on vous demande de faire une animation impliquant des coeurs et du mouvement.
 
 ## Étapes
 1. Ajouter un coeur dans la scène à une position aléatoire (avec transform)
