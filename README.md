@@ -2,7 +2,7 @@
 Exemple d'utilisation de setInterval et de setTimeout
 
 ## Description
-Description à venir
+En prévision de la Saint-Valentin, on vous demande de faire on vous demande de faire une animation impliquant des coeur et du mouvement.
 
 ## Étapes
 1. Ajouter un coeur dans la scène à une position aléatoire (avec transform)
@@ -27,7 +27,6 @@ Description à venir
     1. Ajouter un événement qui s'exécute à la fin de l'animation ("animationend") qui :
         1. Supprime le coeur
         1. Enlève le setTimeout de déplacement
-
 1. Faire "exploser" un coeur lorsqu'il sort de l'écran
     1. Valider la position du coeur à chaque déplacement
     1. Supprimer le déplacement à l'aide de clearInterval
@@ -36,9 +35,10 @@ Description à venir
     1. Enlever le coeur de l'écran
     1. Enlever le setInterval de déplacement
     1. Enlever le setTimeout de durée de vie
+1. Ajouter les animations
 1. Ajouter les effets sonores
 
 
 ## Variantes et ajouts possibles
 
-- Compléter
+- Ajouter de la gravité
