@@ -10,8 +10,9 @@ export default class App {
 		this.actif = false;
 		this.framerate = 30;
 		this.vitesseDApparition = {min: 0, max: 1000};
+		this.gravite = 800;
 		this.dureeDeVie = {min: 1000, max: 3000};
-		this.vitesse = {x: {min: -300, max: 300}, y: {min: -300, max: 300}};
+		this.vitesse = {x: {min: -300, max: 300}, y: {min: -1000, max: 0}};
 		this.sons = [
 			"sons/QKTA234-pop.mp3",
 			"sons/sfx-pop.mp3"
@@ -81,11 +82,12 @@ export default class App {
 	 */
 	static deplacer(coeur) {
 		// Si le coeur est en train de disparaître, on ne le déplace pas
-		if (coeur.classList.contains("disparaitre")) {
-			return;
-		}
-		var x = coeur.depart.x + coeur.vitesse.x * (new Date().getTime() - coeur.debut) / 1000;
-		var y = coeur.depart.y + coeur.vitesse.y * (new Date().getTime() - coeur.debut) / 1000;
+		// if (coeur.classList.contains("disparaitre")) {
+		// 	return;
+		// }
+		var t = (new Date().getTime() - coeur.debut) / 1000;
+		var x = coeur.depart.x + coeur.vitesse.x * t;
+		var y = coeur.depart.y + coeur.vitesse.y * t + .5 * this.gravite * t * t;
 		if (x < 0 || x > window.innerWidth || y < 0 || y > window.innerHeight) {
 			this.eclater(coeur);
 		}
