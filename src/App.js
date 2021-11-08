@@ -11,6 +11,7 @@ export default class App {
 		this.framerate = 30;
 		this.vitesseDApparition = {min: 0, max: 1000};
 		this.dureeDeVie = {min: 1000, max: 3000};
+		this.gravite = 800;
 		this.vitesse = {x: {min: -300, max: 300}, y: {min: -300, max: 300}};
 		this.sons = [
 			"sons/QKTA234-pop.mp3",

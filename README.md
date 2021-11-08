@@ -37,8 +37,8 @@ En prévision de la Saint-Valentin, on vous demande de faire une animation impli
     1. Enlever le setTimeout de durée de vie
 1. Ajouter les animations
 1. Ajouter les effets sonores
+1. Ajouter de la gravité
 
 
 ## Variantes et ajouts possibles
 
-- Ajouter de la gravité
