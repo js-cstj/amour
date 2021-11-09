@@ -163,7 +163,7 @@ En prévision de la Saint-Valentin, on vous demande de faire une animation impli
 			e.currentTarget.classList.remove("???");
 		});
         ```
-1. Faire "exploser" un coeur lorsqu'il sort de l'écran
+1. Faire "eclater" un coeur lorsqu'il sort de l'écran
     1. Valider la position du coeur **à chaque déplacement**. C'est à dire dans la fonction `deplacer`.
         ```js
         if (x < 0 || x > window.innerWidth || y < 0 || y > window.innerHeight) {
@@ -182,8 +182,8 @@ En prévision de la Saint-Valentin, on vous demande de faire une animation impli
         ```js
         ???.???();
 		```
-    1. Mettre les instruction du `if` dans la fonction `disparaitre` et appeler la fonction (à la place).
-1. Faire "exploser" ou "disparaitre" un coeur lorsque la souris le touche
+    1. Mettre les instruction du `if` dans la fonction `eclater` et appeler la fonction (à la place).
+1. Faire "eclater" ou "disparaitre" un coeur lorsque la souris le touche
     1. Dans la fonction `ajouterCoeur`, ajouter un événement "mousemove" ou "mouseenter"
     1. Appeler la fonction `eclater` ou `disparaitre`
     ```js
@@ -215,7 +215,7 @@ En prévision de la Saint-Valentin, on vous demande de faire une animation impli
             return swoosh;
         }
         ```
-    1. Appeler la fonction `jouerPop` dans la fonction `exploser` et la fonction `jouerSwoosh` dans la fonction `disparaitre`.
+    1. Appeler la fonction `jouerPop` dans la fonction `eclater` et la fonction `jouerSwoosh` dans la fonction `disparaitre`.
 1. Ajouter de la gravité
     1. Modifier la ligne qui détermine la position verticale :
         ```js
