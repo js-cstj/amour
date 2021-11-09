@@ -69,6 +69,12 @@ export default class App {
 	
 	
 	/**
+	 * Fonction jouerSwoosh qui joue le son "swoosh" de la disparition
+	 * @returns {Audio}
+	 */
+	
+	
+	/**
 	 * Fonction valeurRange qui retourn un nombre aléatoire en fonction d'un objet contenant le minimum et le maximum
 	 * @param {object|number} range Un objet sous la forme {min: 0, max: 0}. Si range est déjà un nombre, on retourne ce nombre.
 	 * @returns {number} 
