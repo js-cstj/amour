@@ -9,7 +9,7 @@ export default class App {
 		var app = document.getElementById("app");
 		this.actif = false;
 		this.framerate = 30;
-		this.vitesseDApparition = {min: 0, max: 1000};
+		this.vitesseDApparition = {min: 0, max: 100};
 		this.gravite = 800;
 		this.dureeDeVie = {min: 1000, max: 3000};
 		this.vitesse = {x: {min: -300, max: 300}, y: {min: -1000, max: 0}};
@@ -41,6 +41,7 @@ export default class App {
 	 * @returns undefined
 	 */
 	static ajouterCoeur(scene) {
+		var app = document.getElementById("app");
 		var coeur = app.appendChild(this.html_coeur(scene));
 		coeur.interval = window.setInterval((obj) => {
 			this.deplacer(obj);
@@ -112,11 +113,8 @@ export default class App {
 	 * @returns undefined
 	 */
 	static disparaitre(coeur) {
-		coeur.classList.remove("apparaitre");
 		coeur.classList.add("disparaitre");
-		var swoosh = new Audio();
-		swoosh.src = "sons/sfx-swoosh19.mp3";
-		swoosh.play();
+		this.jouerSwoosh();
 		window.clearTimeout(coeur.timeout);
 		coeur.addEventListener("animationend", e => {
 			if (e.animationName === "disparaitre") {
@@ -131,9 +129,9 @@ export default class App {
 	 * @returns undefined
 	 */
 	static eclater(coeur) {
-		coeur.remove();
 		window.clearInterval(coeur.interval);
 		window.clearTimeout(coeur.timeout);
+		coeur.remove();
 		this.jouerPop();
 	}
 	/**
@@ -145,6 +143,16 @@ export default class App {
 		audio.src = this.piger(this.sons);
 		audio.play();
 		return audio;
+	}
+	/**
+	 * Fonction jouerSwoosh qui joue le son "swoosh" de la disparition
+	 * @returns {Audio}
+	 */
+	static jouerSwoosh() {
+		var swoosh = new Audio();
+		swoosh.src = "sons/sfx-swoosh19.mp3";
+		swoosh.play();
+		return swoosh;
 	}
 	/**
 	 * Fonction valeurRange qui retourn un nombre aléatoire en fonction d'un objet contenant le minimum et le maximum
@@ -163,7 +171,8 @@ export default class App {
 	 * @returns {*} 
 	 */
 	static piger(tableau) {
-		return tableau[Math.floor(Math.random() * tableau.length)];
+		var pos = Math.floor(Math.random() * tableau.length);
+		return tableau[pos];
 	}
 	/**
 	 * Fonction ptAlea qui retourne un point aléatoire sous la forme {x: 0, y: 0} qui se trouve dans la zone donnée en paramètre.
@@ -171,9 +180,12 @@ export default class App {
 	 * @return {object} 
 	 */
 	static ptAlea(zone) {
-		var x = Math.floor(Math.random() * zone.largeur);
-		var y = Math.floor(Math.random() * zone.hauteur);
-		return {x: x, y: y};
+		// On crée un objet vide
+		var resultat = {};
+		// On ajoute un x et un y aléatoire en fonction de la zone disponible
+		resultat.x = Math.floor(Math.random() * zone.largeur);
+		resultat.y = Math.floor(Math.random() * zone.hauteur);
+		return resultat;
 	}
 	/**
 	 * Méthode qui permet d'attendre le chargement de la page avant d'éxécuter le script principal
