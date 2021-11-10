@@ -4,6 +4,7 @@
 	<meta charset="UTF-8"/>
 	<title>Amour</title>
 	<link rel="stylesheet" href="./src/style.css"/>
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<script type="module">
 		import App from "./src/App.js";
 	</script>
@@ -14,14 +15,20 @@
 		<footer><span>&copy; Web 3 : Dynamique</span><strong>Amour</strong></footer>
 		<section>
 			<form id="controls" onsubmit="return false;">
-				<label for="vitesseDApparition">Vitesse d'apparition <input type="number" name="vitesseDApparition" id="vitesseDApparition" value="1000"></label>
-				<button id="btnDemarrer">Démarrer</button>
+				<label for="vitesseDApparition">Délai d'apparition <input type="number" name="vitesseDApparition" id="vitesseDApparition" min="10" value="1000"></label>
 				<label><input type="checkbox" name="gravite" id="gravite" checked> Gravité</label>
 				<label><input type="checkbox" name="son" id="son"> Son</label>
 				<label><input type="checkbox" name="eclatement" id="eclatement" checked> Éclatement</label>
+				<label>Événement <select name="evenement" id="evenement">
+					<option value="click">Cliquer</option>
+					<option value="mousemove" selected>Déplacer la souris</option>
+					<option value="touchstart">Toucher</option>
+				</select></label>
+				<label class="avance">Rafraîchissement <input type="number" name="framerate" id="framerate" value="30" min="1" max="100"></label>
+				<button id="btnDemarrer">Démarrer</button>
 			</form>
 		</section>
-		<div class="body" id="app"></div>
+		<div class="body" id="app" style="background-color: red;"></div>
 	</div>
 </body>
 </html>

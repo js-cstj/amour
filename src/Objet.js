@@ -9,7 +9,6 @@ export default class Objet {
 	constructor(scene, origine = new Point(0, 0)) {
 		this.origine = origine;
 		this.scene = scene;
-		this.framerate = 30;
 		this.gravite = App.gravite;
 		this.dureeDeVie = { min: 1000, max: 3000 };
 		this.sonsPop = [
@@ -42,8 +41,8 @@ export default class Objet {
 		}, this.valeurRange(this.dureeDeVie));
 		this.intervalDeplacement = window.setInterval(() => {
 			this.deplacer();
-		}, 1000 / this.framerate);
-		this.dom.addEventListener("mousemove", e => {
+		}, 1000 / App.framerate);
+		this.dom.addEventListener(App.evenement, e => {
 			this.eclater();
 			// this.disparaitre();
 		});

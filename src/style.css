@@ -19,7 +19,8 @@ body {
 
 #interface > header, #interface > footer {
   padding: .5em 1em;
-  background-color: #EEE;
+  background-color: #FEE;
+  color: red;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -29,12 +30,17 @@ body {
 }
 
 #interface > header {
+  text-shadow: 0.1em 0.1em 0.1em rgba(0, 0, 0, 0.5);
   -webkit-box-ordinal-group: -999;
       -ms-flex-order: -1000;
           order: -1000;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 #interface > header h1 {
+  text-align: center;
   margin: 0;
 }
 
@@ -53,6 +59,29 @@ body {
 
 #controls {
   padding: .5em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 1em;
+}
+
+#controls #btnDemarrer {
+  width: 15ch;
+}
+
+#controls #vitesseDApparition {
+  width: 8ch;
+}
+
+#controls #framerate {
+  width: 8ch;
+}
+
+#controls:not(.avance) .avance:not(:focus-within) {
+  display: none;
 }
 
 body {

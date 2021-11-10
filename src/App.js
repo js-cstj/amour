@@ -13,9 +13,11 @@ export default class App {
 		this.actif = false;
 		this.son = false;
 		this.eclatement = false;
+		this.framerate = 10;
 		this.vitesseDApparition = { min: 0, max: 500 };
 		this.vitessePossible = { x: { min: -300, max: 300 }, y: { min: -300, max: 300 } };
 		this.gravite = 800;
+		this.evenement = "touchstart";
 		this.scene = new Zone(
 			app.clientWidth,
 			app.clientHeight
@@ -23,6 +25,11 @@ export default class App {
 		this.majForm(document.getElementById("controls"));
 		document.getElementById("controls").addEventListener("input", e => {
 			this.majForm(e.currentTarget);
+		});	
+		document.getElementById("controls").addEventListener("dblclick", e => {
+			if (e.target === e.currentTarget && e.shiftKey) {
+				e.currentTarget.classList.toggle("avance");
+			}
 		});	
 		document.getElementById("btnDemarrer").addEventListener("click", e => {
 			this.demarrer();
@@ -66,6 +73,8 @@ export default class App {
 		}
 		this.son = form.son.checked;
 		this.eclatement = form.eclatement.checked;
+		this.evenement = form.evenement.value;
+		this.framerate = form.framerate.valueAsNumber;
 	}
 
 	/**
