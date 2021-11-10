@@ -1,3 +1,6 @@
+import Coeur from "./Coeur.js";
+import Zone from "./Zone.js";
+
 /**
  * @module App
  */
@@ -8,26 +11,15 @@ export default class App {
 	static main() {
 		var app = document.getElementById("app");
 		this.actif = false;
-		this.framerate = 30;
-		this.vitesseDApparition = {min: 0, max: 100};
-		this.gravite = 800;
-		this.dureeDeVie = {min: 1000, max: 3000};
-		this.vitesse = {x: {min: -300, max: 300}, y: {min: -1000, max: 0}};
-		this.sons = [
-			"sons/QKTA234-pop.mp3",
-			"sons/sfx-pop.mp3"
-		];
+		this.vitesseDApparition = { min: 0, max: 500 };
 
 		document.body.addEventListener("click", e => {
 			this.actif = !this.actif;
 			if (this.actif) {
-				var scene = {
-					largeur: window.innerWidth,
-					hauteur: window.innerHeight
-				};
-				// window.setInterval(() => {
-				// 	var coeur = app.appendChild(this.html_coeur(scene));
-				// }, 100);
+				var scene = new Zone(
+					window.innerWidth,
+					window.innerHeight
+				);
 				this.ajouterCoeur(scene);
 				app.style.backgroundColor = "green";
 			} else {
@@ -35,6 +27,7 @@ export default class App {
 			}
 		})
 	}
+
 	/**
 	 * Fonction ajouterCoeur qui ajoute un coeur et, si l'application est active, programme l'ajout d'un autre coeur.
 	 * @param {object} scene Un objet sous la forme {largeur: 0, hauteur: 0}
@@ -42,151 +35,15 @@ export default class App {
 	 */
 	static ajouterCoeur(scene) {
 		var app = document.getElementById("app");
-		var coeur = app.appendChild(this.html_coeur(scene));
-		coeur.interval = window.setInterval((obj) => {
-			this.deplacer(obj);
-		}, 1000/this.framerate, coeur);
-		this.apparaitre(coeur);
-		coeur.timeout = window.setTimeout((obj) => {
-			this.disparaitre(obj);
-		}, this.valeurRange(this.dureeDeVie), coeur);
-		coeur.addEventListener("mousemove", e => {
-			this.eclater(e.currentTarget);
-			//this.disparaitre(e.currentTarget);
-		});
+		var coeur = new Coeur(scene, scene.ptAlea(scene));
+		app.appendChild(coeur.html_creer());
 		if (this.actif) {
 			window.setTimeout(() => {
 				this.ajouterCoeur(scene);
-			}, this.valeurRange(this.vitesseDApparition));
+			}, Coeur.prototype.valeurRange(this.vitesseDApparition));
 		}
 	}
-	/**
-	 * Fonction html_coeur qui retourne un élément représentant un coeur dans l'espace disponible
-	 * @param {object} scene Un objet sous la forme {largeur: 0, hauteur: 0}
-	 * @returns {HTMLElement} 
-	 */
-	static html_coeur(scene) {
-		var coeur = document.createElement("div");
-		coeur.classList.add("coeur");
-		var image = coeur.appendChild(document.createElement("img"));
-		image.src = "images/coeur.png";
-		coeur.depart = this.ptAlea(scene);
-		coeur.style.transform = "translate("+coeur.depart.x+"px, "+coeur.depart.y+"px)";
-		coeur.debut = new Date().getTime();
-		coeur.vitesse = {x: this.valeurRange(this.vitesse.x), y: this.valeurRange(this.vitesse.y)};
-		return coeur;
-	}
-	/**
-	 * Fonction deplacer qui déplace le coeur donné dans la scène
-	 * @param {HTMLElement} coeur L'objet à déplacer
-	 * @returns undefined
-	 */
-	static deplacer(coeur) {
-		// Si le coeur est en train de disparaître, on ne le déplace pas
-		// if (coeur.classList.contains("disparaitre")) {
-		// 	return;
-		// }
-		var t = (new Date().getTime() - coeur.debut) / 1000;
-		var x = coeur.depart.x + coeur.vitesse.x * t;
-		var y = coeur.depart.y + coeur.vitesse.y * t + .5 * this.gravite * t * t;
-		if (x < 0 || x > window.innerWidth || y < 0 || y > window.innerHeight) {
-			this.eclater(coeur);
-		}
-		coeur.style.transform = "translate("+x+"px, "+y+"px)";
-	}
-	/**
-	 * Fonction apparaitre qui gère l'apparition d'un coeur sur la scène
-	 * @param {HTMLElement} coeur L'objet à faire apparaître
-	 * @returns undefined
-	 */
-	static apparaitre(coeur) {
-		coeur.classList.add("apparaitre");
-		coeur.addEventListener("animationend", e => {
-			if (e.animationName === "apparaitre") {
-				e.currentTarget.classList.remove("apparaitre");
-			}
-		});
-	}
-	/**
-	 * Fonction disparaitre qui gère la disparition d'un coeur
-	 * @param {HTMLElement} coeur L'objet à faire disparaître
-	 * @returns undefined
-	 */
-	static disparaitre(coeur) {
-		coeur.classList.add("disparaitre");
-		this.jouerSwoosh();
-		window.clearTimeout(coeur.timeout);
-		coeur.addEventListener("animationend", e => {
-			if (e.animationName === "disparaitre") {
-				window.clearInterval(e.currentTarget.interval);
-				e.currentTarget.remove();
-			}
-		});
-	}
-	/**
-	 * Fonction eclater qui retire l'élément donné de la scène et émet un son de pop
-	 * @param {HTMLElement} coeur L'objet à faire éclater
-	 * @returns undefined
-	 */
-	static eclater(coeur) {
-		window.clearInterval(coeur.interval);
-		window.clearTimeout(coeur.timeout);
-		coeur.remove();
-		this.jouerPop();
-	}
-	/**
-	 * Fonction jouerPop qui joue un son "pop" aléatoire
-	 * @returns {Audio}
-	 */
-	static jouerPop() {
-		var audio = new Audio();
-		audio.src = this.piger(this.sons);
-		audio.play();
-		return audio;
-	}
-	/**
-	 * Fonction jouerSwoosh qui joue le son "swoosh" de la disparition
-	 * @returns {Audio}
-	 */
-	static jouerSwoosh() {
-		var swoosh = new Audio();
-		swoosh.src = "sons/sfx-swoosh19.mp3";
-		swoosh.play();
-		return swoosh;
-	}
-	/**
-	 * Fonction valeurRange qui retourn un nombre aléatoire en fonction d'un objet contenant le minimum et le maximum
-	 * @param {object|number} range Un objet sous la forme {min: 0, max: 0}. Si range est déjà un nombre, on retourne ce nombre.
-	 * @returns {number} 
-	 */
-	 static valeurRange(range) {
-		if (typeof range !== "object") {
-			return range;
-		}
-		return Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
-	}
-	/**
-	 * Fonction piger qui retourne un élément aléatoire pigé dans le tableau donné
-	 * @param {Array} tableau
-	 * @returns {*} 
-	 */
-	static piger(tableau) {
-		var pos = Math.floor(Math.random() * tableau.length);
-		return tableau[pos];
-	}
-	/**
-	 * Fonction ptAlea qui retourne un point aléatoire sous la forme {x: 0, y: 0} qui se trouve dans la zone donnée en paramètre.
-	 * @param {object} zone Un objet sous la forme {largeur: 0, hauteur: 0}
-	 * @return {object} 
-	 */
-	static ptAlea(zone) {
-		// On crée un objet vide
-		var resultat = {};
-		// On ajoute un x et un y aléatoire en fonction de la zone disponible
-		resultat.x = Math.floor(Math.random() * zone.largeur);
-		resultat.y = Math.floor(Math.random() * zone.hauteur);
-		return resultat;
-	}
+	
 	/**
 	 * Méthode qui permet d'attendre le chargement de la page avant d'éxécuter le script principal
 	 * @returns undefined Ne retourne rien
