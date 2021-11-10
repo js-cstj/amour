@@ -13,8 +13,8 @@ body {
   min-height: 100%;
   display: -ms-grid;
   display: grid;
-  -ms-grid-rows: auto 1fr auto;
-      grid-template-rows: auto 1fr auto;
+  -ms-grid-rows: auto auto 1fr auto;
+      grid-template-rows: auto auto 1fr auto;
 }
 
 #interface > header, #interface > footer {
@@ -47,6 +47,12 @@ body {
 
 #app {
   padding: 1em;
+  position: relative;
+  overflow: hidden;
+}
+
+#controls {
+  padding: .5em;
 }
 
 body {

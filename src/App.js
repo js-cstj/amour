@@ -11,21 +11,61 @@ export default class App {
 	static main() {
 		var app = document.getElementById("app");
 		this.actif = false;
+		this.son = false;
+		this.eclatement = false;
 		this.vitesseDApparition = { min: 0, max: 500 };
-
-		document.body.addEventListener("click", e => {
+		this.vitessePossible = { x: { min: -300, max: 300 }, y: { min: -300, max: 300 } };
+		this.gravite = 800;
+		this.scene = new Zone(
+			app.clientWidth,
+			app.clientHeight
+		);
+		this.majForm(document.getElementById("controls"));
+		document.getElementById("controls").addEventListener("input", e => {
+			this.majForm(e.currentTarget);
+		});	
+		document.getElementById("btnDemarrer").addEventListener("click", e => {
+			this.demarrer();
+		});	
+	}
+	
+	/**
+	 * Fonction demarrer qui démarre (ou arrête) l'animation
+	 * @param {boolean} etat
+	 * @returns undefined
+	 */
+	static demarrer(etat) {
+		if (etat !== undefined) {
+			this.actif === etat;
+		} else {
 			this.actif = !this.actif;
-			if (this.actif) {
-				var scene = new Zone(
-					window.innerWidth,
-					window.innerHeight
-				);
-				this.ajouterCoeur(scene);
-				app.style.backgroundColor = "green";
-			} else {
-				app.style.backgroundColor = "red";
-			}
-		})
+		}
+		if (this.actif) {
+			this.ajouterCoeur(this.scene);
+			document.getElementById("app").style.backgroundColor = "green";
+			document.getElementById("btnDemarrer").innerHTML = "Arrêter";
+		} else {
+			document.getElementById("app").style.backgroundColor = "red";
+			document.getElementById("btnDemarrer").innerHTML = "Démarrer";
+		}
+	}
+
+	/**
+	 * Fonction majForm qui met à jour les propriétés en fonction du formulaire
+	 * @param {HTMLFormElement} form
+	 * @returns undefined
+	 */
+	static majForm(form) {
+		this.vitesseDApparition.max = form.vitesseDApparition.valueAsNumber;
+		if (form.gravite.checked) {
+			this.gravite = 800;
+			this.vitessePossible.y = { min: -600, max: 0 };
+		} else {
+			this.gravite = 0;
+			this.vitessePossible.y = { min: -300, max: 300 };
+		}
+		this.son = form.son.checked;
+		this.eclatement = form.eclatement.checked;
 	}
 
 	/**

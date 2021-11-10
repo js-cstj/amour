@@ -1,4 +1,5 @@
 import Point from "./Point.js";
+import App from "./App.js";
 export default class Objet {
 	/**
 	 * Creates an instance of Objet.
@@ -9,8 +10,7 @@ export default class Objet {
 		this.origine = origine;
 		this.scene = scene;
 		this.framerate = 30;
-		this.gravite = 0; // ou 800
-		this.vitessePossible = { x: { min: -300, max: 300 }, y: { min: -300, max: 300 } };
+		this.gravite = App.gravite;
 		this.dureeDeVie = { min: 1000, max: 3000 };
 		this.sonsPop = [
 			// "sons/QKTA234-pop.mp3",
@@ -18,6 +18,7 @@ export default class Objet {
 		];
 		this.sonSwoosh = "sons/sfx-swoosh19.mp3";
 	}
+
 	/**
 	 * Fonction html_creer qui retourne un élément représentant un objet dans l'espace disponible
 	 * L'élément HTML créé est également gardée dans la propriété this.dom
@@ -33,8 +34,8 @@ export default class Objet {
 		this.debut = new Date().getTime();
 		this.apparaitre();
 		this.vitesse = new Point(
-			this.valeurRange(this.vitessePossible.x),
-			this.valeurRange(this.vitessePossible.y)
+			this.valeurRange(App.vitessePossible.x),
+			this.valeurRange(App.vitessePossible.y)
 		);
 		this.timeoutVie = window.setTimeout(() => {
 			this.disparaitre();
@@ -59,7 +60,7 @@ export default class Objet {
 			this.origine.x + this.vitesse.x * t,
 			this.origine.y + this.vitesse.y * t + .5 * this.gravite * t * t
 		);
-		if (!this.scene.contient(pt)) {
+		if (App.eclatement && !this.scene.contient(pt)) {
 			this.eclater();
 		}
 		this.dom.style.transform = pt.css_translate();
@@ -111,6 +112,9 @@ export default class Objet {
 	 * @returns {Audio}
 	 */
 	jouerSon(son) {
+		if (!App.son) {
+			return;
+		}
 		if (typeof son !== "string") {
 			son = this.piger(son);
 		}

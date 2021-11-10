@@ -8,10 +8,19 @@
 		import App from "./src/App.js";
 	</script>
 </head>
-<body style="background-color: red;">
+<body>
 	<div id="interface">
 		<header><h1>Amour</h1></header>
 		<footer><span>&copy; Web 3 : Dynamique</span><strong>Amour</strong></footer>
+		<section>
+			<form id="controls" onsubmit="return false;">
+				<label for="vitesseDApparition">Vitesse d'apparition <input type="number" name="vitesseDApparition" id="vitesseDApparition" value="1000"></label>
+				<button id="btnDemarrer">Démarrer</button>
+				<label><input type="checkbox" name="gravite" id="gravite" checked> Gravité</label>
+				<label><input type="checkbox" name="son" id="son"> Son</label>
+				<label><input type="checkbox" name="eclatement" id="eclatement" checked> Éclatement</label>
+			</form>
+		</section>
 		<div class="body" id="app"></div>
 	</div>
 </body>
