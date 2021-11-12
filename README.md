@@ -50,17 +50,17 @@ En prévision de la Saint-Valentin, on vous demande de faire une animation impli
         var app = ???;
         var coeur = app.???(this.html_coeur(scene));
         ```
-    1. À l'aide d'une boucle `for`
+    1. Dans le `main`, ajouter 10 coeurs l'aide d'une boucle `for` et de la fonction `ajouterCoeur`
         ```js
         // Une boucle avec 10 itération
         ```
-    1. À l'aide de `setInterval` (interval régulier)
+    1. Dans le main, ajouter des coeurs à interval régulier à l'aide de `setInterval`
         ```js
         var idInterval = window.setInterval(() => {
             this.???(scene);
         }, 1000)
         ```
-    1. À l'aide de `setTimeout` (interval variable). Modifier la fonction `ajouterCoeur` en y ajoutant le code ci-dessous. **Mettre les deux autre méthodes en commentaires**
+    1. Ajouter des coeurs à interval variable à l'aide de `setTimeout`. Modifier la fonction `ajouterCoeur` en y ajoutant le code ci-dessous. **Mettre les deux autre méthodes en commentaires**
         ```js
         var idTimeout = window.setTimeout(() => {
 			this.ajouterCoeur(scene);
