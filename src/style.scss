@@ -37,6 +37,7 @@ body {
 	padding: 1em;
 	position: relative;
 	overflow: hidden;
+	background-color: red;
 }
 #controls {
 	padding: .5em;
@@ -45,6 +46,9 @@ body {
 	gap: 1em;
 	#btnDemarrer {
 		width: 15ch;
+		&::before {
+			content: "Démarrer";
+		}
 	}
 	#vitesseDApparition {
 		width: 8ch;
@@ -54,6 +58,14 @@ body {
 	}
 	&:not(.avance) .avance:not(:focus-within) {
 		display: none;
+	}
+}
+body.actif {
+	#controls #btnDemarrer::before {
+		content: "Arrêter";
+	}
+	#app {
+		background-color: pink;
 	}
 }
 body {

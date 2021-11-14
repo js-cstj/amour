@@ -26,7 +26,7 @@ export default class App {
 		document.getElementById("controls").addEventListener("input", e => {
 			this.majForm(e.currentTarget);
 		});	
-		document.getElementById("controls").addEventListener("dblclick", e => {
+		document.getElementById("controls").addEventListener("click", e => {
 			if (e.target === e.currentTarget && e.shiftKey) {
 				e.currentTarget.classList.toggle("avance");
 			}
@@ -49,11 +49,13 @@ export default class App {
 		}
 		if (this.actif) {
 			this.ajouterCoeur(this.scene);
-			document.getElementById("app").style.backgroundColor = "green";
-			document.getElementById("btnDemarrer").innerHTML = "Arrêter";
+			document.body.classList.add("actif");
+			// document.getElementById("app").style.backgroundColor = "green";
+			// document.getElementById("btnDemarrer").innerHTML = "Arrêter";
 		} else {
-			document.getElementById("app").style.backgroundColor = "red";
-			document.getElementById("btnDemarrer").innerHTML = "Démarrer";
+			document.body.classList.remove("actif");
+			// document.getElementById("app").style.backgroundColor = "red";
+			// document.getElementById("btnDemarrer").innerHTML = "Démarrer";
 		}
 	}
 

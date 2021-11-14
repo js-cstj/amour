@@ -1,3 +1,4 @@
+@charset "UTF-8";
 html {
   height: 100%;
   font-size: 16px;
@@ -55,6 +56,7 @@ body {
   padding: 1em;
   position: relative;
   overflow: hidden;
+  background-color: red;
 }
 
 #controls {
@@ -72,6 +74,10 @@ body {
   width: 15ch;
 }
 
+#controls #btnDemarrer::before {
+  content: "Démarrer";
+}
+
 #controls #vitesseDApparition {
   width: 8ch;
 }
@@ -82,6 +88,14 @@ body {
 
 #controls:not(.avance) .avance:not(:focus-within) {
   display: none;
+}
+
+body.actif #controls #btnDemarrer::before {
+  content: "Arrêter";
+}
+
+body.actif #app {
+  background-color: pink;
 }
 
 body {
